@@ -1,0 +1,37 @@
+       struct security_token *user_token;
+       struct security_descriptor *domain_sd;
+       struct ldb_dn *domain_dn = ldb_get_default_basedn(ldb_module_get_ctx(ac->module));
+       const struct uac_to_guid {
+               uint32_t uac;
+               const char *oid;
+               const char *guid;
+               enum sec_privilege privilege;
+               bool delete_is_privileged;
+               const char *error_string;
+       } map[] = {
+               {
+                       .guid = GUID_DRS_DS_INSTALL_REPLICA,
+                       .error_string = "Adding the UF_PARTIAL_SECRETS_ACCOUNT bit in userAccountControl requires the DS-Install-Replica right that was not given on the Domain object"
+               },
+               {
+                       .uac = UF_INTERDOMAIN_TRUST_ACCOUNT,
+                       .oid = DSDB_CONTROL_PERMIT_INTERDOMAIN_TRUST_UAC_OID,
+               return ldb_module_operr(ac->module);
+       }
+
+       ret = dsdb_get_sd_from_ldb_message(ldb_module_get_ctx(ac->module),
+                                          ac, res->msgs[0], &domain_sd);
+
+       if (ret != LDB_SUCCESS) {
+                               if (have_priv == false) {
+                                       ret = LDB_ERR_INSUFFICIENT_ACCESS_RIGHTS;
+                               }
+                       } else {
+                               ret = acl_check_extended_right(ac, domain_sd,
+                                                              user_token,
+                                                              map[i].guid,
+                                                              SEC_ADS_CONTROL_ACCESS,
+                                                              sid);
+                       }
+                       if (ret != LDB_SUCCESS) {
+                               break;
