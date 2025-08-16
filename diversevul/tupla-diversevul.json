@@ -8,5 +8,17 @@
         "hash": 73008646937836648589283922871188272089,
         "size": 157,
         "message": "added an extra check while checking the padding."
+    },
+    {
+        "func": "static char *make_filename_safe(const char *filename TSRMLS_DC)\n{\n\tif (*filename && strncmp(filename, \":memory:\", sizeof(\":memory:\")-1)) {\n\t\tchar *fullpath = expand_filepath(filename, NULL TSRMLS_CC);\n\n\t\tif (!fullpath) {\n\t\t\treturn NULL;\n\t\t}\n\n\t\tif (PG(safe_mode) && (!php_checkuid(fullpath, NULL, CHECKUID_CHECK_FILE_AND_DIR))) {\n\t\t\tefree(fullpath);\n\t\t\treturn NULL;\n\t\t}\n\n\t\tif (php_check_open_basedir(fullpath TSRMLS_CC)) {\n\t\t\tefree(fullpath);\n\t\t\treturn NULL;\n\t\t}\n\t\treturn fullpath;\n\t}\n\treturn estrdup(filename);\n}",
+        "target": 1,
+        "cwe": [
+            "CWE-264"
+        ],
+        "project": "php-src",
+        "commit_id": "055ecbc62878e86287d742c7246c21606cee8183",
+        "hash": 211824207069112513181516095447837228041,
+        "size": 22,
+        "message": "Improve check for :memory: pseudo-filename in SQlite"
     }
 ]

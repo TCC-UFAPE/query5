@@ -2,8 +2,8 @@ import ijson
 import json
 
 caminho_arquivo_entrada = "MSR_data_cleaned.json"
-caminho_arquivo_saida = "cinco_primeiras_tuplas-bigvul.json"
-numero_de_tuplas_a_salvar = 5
+caminho_arquivo_saida = "bigvul/tupla-bigvul.json"
+numero_de_tuplas_a_salvar = 2
 
 primeiras_tuplas = []
 

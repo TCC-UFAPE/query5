@@ -1,8 +1,8 @@
 import json
 
-caminho_arquivo_entrada = "diversevul_20230702.json"
-caminho_arquivo_saida = "cinco_primeiras_tuplas-diversevul.json"
-numero_de_tuplas_a_ler = 5
+caminho_arquivo_entrada = "diversevul/diversevul_20230702.json"
+caminho_arquivo_saida = "diversevul/tupla-diversevul.json"
+numero_de_tuplas_a_ler = 2
 
 lista_de_tuplas = []
 try:
@@ -21,7 +21,7 @@ try:
         with open(caminho_arquivo_saida, 'w', encoding='utf-8') as f_out:
             json.dump(lista_de_tuplas, f_out, indent=4, ensure_ascii=False)
         
-        print(f"Sucesso! As {len(lista_de_tuplas)} primeiras tuplas foram salvas em: {caminho_arquivo_saida}")
+        print(f"Sucesso! As {len(lista_de_tuplas)} tuplas foram salvas em: {caminho_arquivo_saida}")
     else:
         print("Erro: O arquivo de entrada esta vazio ou nao pode ser lido.")
 
